@@ -7,6 +7,8 @@
 //kalau misalnya pasword ga sama, return salah password
 //kalau passwordnya sama, return sukses beserta data usernya
 
+import { comparePasswords } from "../../helper/bcrypt";
+import { excludeFields } from "../../helper/excludeFields";
 import { findUserbyEmail } from "../../repositories/users/findUserByEmail";
 import { findUserbyUsername } from "../../repositories/users/findUserByUsername";
 
@@ -40,18 +42,20 @@ export const loginUserAction = async (
       };
     }
 
+    const isPasswordValid = await comparePasswords(password, user.password);
     // CEK PASSWORD SAMA APA ENGGAK
-    if (user.password !== password) {
+    if (!isPasswordValid) {
       return {
         status: 400,
         message: "Wrong Password",
       };
     }
-
+    // PENGECUALIAN DATA YANG AKAN DITAMPILKAN OLEH FRONTEND
+    const dataWithoutPassword = excludeFields(user, ["password"]);
     return {
       status: 200,
       message: "Login Success",
-      data: user,
+      data: dataWithoutPassword,
     };
   } catch (error) {
     console.log(error);
