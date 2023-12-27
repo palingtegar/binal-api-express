@@ -12,7 +12,7 @@ export const loginUserController = async (
     const result = await loginUserAction(usernameOrEmail, password);
     // res.status(result.status).send(result);
 
-    res.status(200).send(result);
+    res.status(result.status).send(result);
   } catch (error) {
     next(error);
   }
