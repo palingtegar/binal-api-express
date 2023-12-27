@@ -9,6 +9,7 @@
 
 import { comparePasswords } from "../../helper/bcrypt";
 import { excludeFields } from "../../helper/excludeFields";
+import { createToken } from "../../helper/jwt";
 import { findUserbyEmail } from "../../repositories/users/findUserByEmail";
 import { findUserbyUsername } from "../../repositories/users/findUserByUsername";
 
@@ -52,10 +53,14 @@ export const loginUserAction = async (
     }
     // PENGECUALIAN DATA YANG AKAN DITAMPILKAN OLEH FRONTEND
     const dataWithoutPassword = excludeFields(user, ["password"]);
+
+    const token = createToken({ id: user.id });
+
     return {
       status: 200,
       message: "Login Success",
       data: dataWithoutPassword,
+      token,
     };
   } catch (error) {
     console.log(error);
