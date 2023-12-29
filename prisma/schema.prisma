@@ -29,5 +29,5 @@ model Tweets {
   isDeleted   Boolean   @default(false)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  User User @relation(fields: [userId], references: [id])
+  User        User      @relation(fields: [userId], references: [id])
 }
