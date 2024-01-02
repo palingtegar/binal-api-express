@@ -5,7 +5,7 @@ import { deleteTweetController } from "../controllers/tweets/deleteTweetControll
 import { updateTweetController } from "../controllers/tweets/updateTweetCotroller";
 
 const router = express.Router();
-
+//routers
 router.post("/", createTweetController);
 router.get("/", getTweetsController);
 router.delete("/:id", deleteTweetController);
